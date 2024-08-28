@@ -119,6 +119,40 @@
             <small id="note-date" class="subtitle"></small>
           </li>
         </template>
+        <template id="edit-note-template">
+          <form class="edit-note-form">
+            <header>
+              <p>Edit note</p>
+              <div class="edit-node-buttons">
+                <button
+                  id="cancel-note-edit"
+                  type="button"
+                  class="icon-button icon-button--ghost"
+                >
+                  Cancel
+                </button>
+                <button
+                  id="confirm-note-edit"
+                  type="button"
+                  class="icon-button icon-button--ghost"
+                >
+                  Edit
+                </button>
+              </div>
+            </header>
+            <input
+              id="note-title"
+              type="text"
+              class="field__input"
+              value="Untitled Note"
+            />
+            <textarea
+              id="note-body"
+              placeholder="Your note..."
+              class="field__input field__input--expandable"
+            ></textarea>
+          </form>
+        </template>
       </div>
     </div>
 

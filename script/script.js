@@ -95,6 +95,14 @@ class NotesApp {
         this.saveNoteButton.classList.remove("show");
       }
     });
+
+    this.noteBody.addEventListener("focus", function () {
+      this.select();
+    });
+
+    this.noteTitle.addEventListener("focus", function () {
+      this.select();
+    });
   }
 
   removeNoteFromArray(id) {
@@ -105,7 +113,7 @@ class NotesApp {
     }
   }
 
-  getNoteTemplate(note) {
+  getNoteTemplateAndListeners(note) {
     const template = document
       .getElementById("note-template")
       .content.cloneNode(true);
@@ -118,7 +126,7 @@ class NotesApp {
 
     const deleteButton = template.querySelector("#remove-note");
 
-    deleteButton.addEventListener("click", (e) => {
+    deleteButton.addEventListener("click", () => {
       modal.style.display = "block";
 
       const cancelRemove = () => {
@@ -155,22 +163,86 @@ class NotesApp {
 
     const editButton = template.querySelector("#edit-note");
 
-    editButton.addEventListener("click", () => {
-      console.log("asd");
+    const editNote = () => {
+      this.renderNotesList(note.id);
+      this.addNoteButton.style.display = "none";
+      this.confirmNoteRemoveButton.removeEventListener("click", editNote);
+    };
+
+    editButton.addEventListener("click", editNote);
+
+    return template;
+  }
+
+  getEditNoteTemplateAndListeners(note) {
+    const template = document
+      .getElementById("edit-note-template")
+      .content.cloneNode(true);
+
+    const noteTitleElement = template.querySelector("#note-title");
+    const noteBodyElement = template.querySelector("#note-body");
+
+    noteTitleElement.value = note.title;
+    noteBodyElement.value = note.body;
+
+    const confirmEdit = () => {
+      const index = this.notes.findIndex((item) => note.id === item.id);
+      if (index !== -1) {
+        this.notes[index] = {
+          ...this.notes[index],
+          title: noteTitleElement.value,
+          body: noteBodyElement.value,
+        };
+      }
+      this.renderNotesList();
+      this.addNoteButton.style.display = "flex";
+      this.confirmNoteRemoveButton.removeEventListener("click", cancelEdit);
+      this.confirmNoteRemoveButton.removeEventListener("click", confirmEdit);
+    };
+
+    const cancelEdit = () => {
+      this.renderNotesList();
+      this.addNoteButton.style.display = "flex";
+      this.confirmNoteRemoveButton.removeEventListener("click", cancelEdit);
+      this.confirmNoteRemoveButton.removeEventListener("click", confirmEdit);
+    };
+
+    template
+      .querySelector("#confirm-note-edit")
+      .addEventListener("click", confirmEdit);
+
+    template
+      .querySelector("#cancel-note-edit")
+      .addEventListener("click", cancelEdit);
+
+    template
+      .querySelector("#note-title")
+      .addEventListener("focus", function () {
+        this.select();
+      });
+
+    template.querySelector("#note-body").addEventListener("focus", function () {
+      this.select();
     });
 
     return template;
   }
 
-  renderNotesList() {
+  renderNotesList(editedNoteId = undefined) {
     const filteredNotes = [...this.notes]
       .reverse()
-      .filter((note) =>
-        note.title.toLowerCase().includes(this.searchInput.value.toLowerCase())
+      .filter(
+        (note) =>
+          note.title
+            .toLowerCase()
+            .includes(this.searchInput.value.toLowerCase()) ||
+          note.body.toLowerCase().includes(this.searchInput.value.toLowerCase())
       );
 
-    const notesTemplates = filteredNotes.map((note, index) => {
-      return this.getNoteTemplate(note);
+    const notesTemplates = filteredNotes.map((note) => {
+      return editedNoteId === note.id
+        ? this.getEditNoteTemplateAndListeners(note)
+        : this.getNoteTemplateAndListeners(note);
     });
 
     const fragment = document.createDocumentFragment();

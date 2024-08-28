@@ -41,19 +41,33 @@
   overflow-wrap: break-word;
 }
 
-.add-note-form {
-  display: none;
+.add-note-form,
+.edit-note-form {
   flex-direction: column;
 }
 
-.add-note-form > * {
+.add-note-form > *,
+.edit-note-form > * {
   margin-bottom: 1rem;
 }
 
-.add-note-form > header {
+.add-note-form > header,
+.edit-note-form > header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+}
+
+.add-note-form {
+  display: none;
+}
+
+.edit-node-buttons {
+  display: flex;
+}
+
+.edit-node-buttons > *:not(:last-child) {
+  margin-right: 0.5rem;
 }
 
 #note-body-container {
