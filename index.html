@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="page-header">
+        <img src="./img/note.svg" alt="note" />
+        <h1>Notes</h1>
+      </header>
+
+      <div class="field">
+        <img src="./img/search.svg" alt="search" class="field__icon" />
+        <input
+          id="search"
+          type="text"
+          placeholder="Search notes..."
+          class="field__input"
+        />
+      </div>
+
+      <div id="no-notes" class="no-notes">
+        <img src="./img/info.svg" alt="info" />
+        <h1>No notes yet</h1>
+        <p>Add a note to keep track of your learnings.</p>
+        <button id="addFirstNote" class="icon-button icon-button--secondary">
+          <span class="icon">
+            <img src="./img/noteplus.svg" alt="noteplus" />
+          </span>
+          Add Note
+        </button>
+      </div>
+
+      <form class="add-note-form">
+        <div>
+          <p>Add new note</p>
+          <button
+            id="cancelNote"
+            type="button"
+            class="icon-button icon-button--ghost"
+          >
+            Cancel
+          </button>
+        </div>
+        <input
+          id="note-title"
+          type="text"
+          class="field__input"
+          value="Untitled Note"
+        />
+        <textarea
+          id="note-body"
+          placeholder="Your note..."
+          class="field__input field__input--expandable"
+          value=""
+        ></textarea>
+
+        <button id="save-note" type="button">Avdd</button>
+      </form>
+
+      <button
+        id="addNote"
+        class="icon-button icon-button--primary icon-button--full"
+        style="display: none"
+      >
+        Add Note
+      </button>
+
+      <ul id="noteList" class="note-list">
+        <!-- notes here -->
+      </ul>
+
+      <div id="templates" style="display: none">
+        <template id="note-template">
+          <li class="note">
+            <div class="note__header">
+              <h2 id="note-title"></h2>
+              <div>
+                <button
+                  id="edit-note"
+                  class="icon-button icon-button--icon-only"
+                >
+                  <span class="icon">
+                    <img src="./img/edit.svg" alt="edit" />
+                  </span>
+                </button>
+                <button
+                  id="remove-note"
+                  class="icon-button icon-button--icon-only"
+                >
+                  <span class="icon">
+                    <img src="./img/trash.svg" alt="remove" />
+                  </span>
+                </button>
+              </div>
+            </div>
+            <p id="note-body"></p>
+            <p id="note-date" class="subtitle"></p>
+            <!-- <input type="text" placeholder="Untitled Note" />
+            <textarea placeholder="Your note..."></textarea> -->
+          </li>
+        </template>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
