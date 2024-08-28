@@ -11,6 +11,7 @@ class NotesApp {
     this.noteTitle = document.getElementById("note-title");
     this.noteBody = document.getElementById("note-body");
     this.addNoteForm = document.querySelector(".add-note-form");
+    this.noteFormBody = document.getElementById("note-body");
 
     this.addEventListeners();
     this.renderNotesList();
@@ -77,6 +78,14 @@ class NotesApp {
     });
 
     this.searchInput.addEventListener("input", () => this.renderNotesList());
+
+    this.noteFormBody.addEventListener("input", () => {
+      if (this.noteFormBody.value.trim() !== "") {
+        this.saveNoteButton.classList.add("show");
+      } else {
+        this.saveNoteButton.classList.remove("show");
+      }
+    });
   }
 
   renderNote(note) {

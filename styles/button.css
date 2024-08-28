@@ -1,0 +1,72 @@
+.icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+
+.icon-button--primary {
+  background-color: #6b3c9b;
+  color: #ffffff;
+}
+
+.icon-button--primary:hover {
+  background-color: #844dba;
+}
+
+.icon-button--primary:active {
+  background-color: #5b2f87;
+}
+
+.icon-button--secondary {
+  background-color: #ffffff;
+  color: #1b1c1e;
+  border: 2px solid #bcbcbd;
+}
+
+.icon-button--secondary:hover {
+  background-color: #e7e7e7;
+}
+
+.icon-button--secondary:active {
+  background-color: #bcbcbc;
+}
+
+.icon-button--ghost {
+  color: #0f75b8;
+  background-color: transparent;
+  font-size: 0.875rem;
+  padding: 0;
+}
+
+.icon-button--ghost:hover {
+  text-decoration: underline;
+}
+
+.icon-button--icon-only {
+  background-color: transparent;
+  padding: 0;
+}
+
+.icon-button--full {
+  width: 100%;
+}
+
+.icon-button .icon {
+  margin-right: 0.5rem;
+}
+
+.icon-button.icon-button--icon-only .icon {
+  margin-right: 0;
+}
+
+.icon-button .icon svg {
+  width: 1rem;
+  height: 1.25rem;
+}
