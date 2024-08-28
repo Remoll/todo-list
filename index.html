@@ -30,7 +30,7 @@
           id="search"
           type="text"
           placeholder="Search notes..."
-          class="field__input"
+          class="field__input field__input--with-icon"
         />
       </div>
 
@@ -96,7 +96,7 @@
           <li class="note">
             <div class="note__header">
               <h2 id="note-title"></h2>
-              <div>
+              <div id="note-buttons">
                 <button
                   id="edit-note"
                   class="icon-button icon-button--icon-only"
@@ -119,6 +119,21 @@
             <small id="note-date" class="subtitle"></small>
           </li>
         </template>
+      </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h1>Delete note</h1>
+        <p>Are you sure you want to delete this note?</p>
+        <div class="modal-buttons">
+          <button id="cancel-delete" class="icon-button icon-button--secondary">
+            Cancel
+          </button>
+          <button id="confirm-delete" class="icon-button icon-button--primary">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
 

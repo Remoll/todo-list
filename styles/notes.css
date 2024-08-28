@@ -70,3 +70,7 @@
 #save-note.show {
   display: inline-block;
 }
+
+#note-buttons > *:not(:last-child) {
+  margin-right: 0.5rem;
+}

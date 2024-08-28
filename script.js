@@ -12,6 +12,9 @@ class NotesApp {
     this.noteBody = document.getElementById("note-body");
     this.addNoteForm = document.querySelector(".add-note-form");
     this.noteFormBody = document.getElementById("note-body");
+    this.modal = document.getElementById("modal");
+    this.confirmNoteRemoveButton = document.getElementById("confirm-delete");
+    this.cancelNoteRemoveButton = document.getElementById("cancel-delete");
 
     this.addEventListeners();
     this.renderNotesList();
@@ -20,6 +23,7 @@ class NotesApp {
   resetForm() {
     this.noteTitle.value = "Untitled Note";
     this.noteBody.value = "";
+    this.saveNoteButton.classList.remove("show");
   }
 
   getFormatedDate(dateString) {
@@ -86,6 +90,10 @@ class NotesApp {
         this.saveNoteButton.classList.remove("show");
       }
     });
+
+    this.cancelNoteRemoveButton.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
   }
 
   renderNote(note) {
@@ -100,7 +108,18 @@ class NotesApp {
 
     const deleteButton = template.querySelector("#remove-note");
     deleteButton.addEventListener("click", (e) => {
-      e.target.closest("li").remove();
+      modal.style.display = "block";
+
+      const confirmRemove = () => {
+        e.target.closest("li").remove();
+        modal.style.display = "none";
+        this.confirmNoteRemoveButton.removeEventListener(
+          "click",
+          confirmRemove
+        );
+      };
+
+      this.confirmNoteRemoveButton.addEventListener("click", confirmRemove);
     });
 
     document.getElementById("noteList").prepend(template);
