@@ -24,7 +24,7 @@
         <h1>Notes</h1>
       </header>
 
-      <div class="field">
+      <div class="field search-note">
         <img src="./img/search.svg" alt="search" class="field__icon" />
         <input
           id="search"
@@ -47,7 +47,7 @@
       </div>
 
       <form class="add-note-form">
-        <div>
+        <header>
           <p>Add new note</p>
           <button
             id="cancelNote"
@@ -56,7 +56,7 @@
           >
             Cancel
           </button>
-        </div>
+        </header>
         <input
           id="note-title"
           type="text"
@@ -70,7 +70,7 @@
           value=""
         ></textarea>
 
-        <button id="save-note" type="button">Avdd</button>
+        <button id="save-note" type="button">Avded</button>
       </form>
 
       <button
@@ -78,7 +78,7 @@
         class="icon-button icon-button--primary icon-button--full"
         style="display: none"
       >
-        Add Note
+        Add New
       </button>
 
       <ul id="noteList" class="note-list">
@@ -109,10 +109,8 @@
                 </button>
               </div>
             </div>
-            <p id="note-body"></p>
-            <p id="note-date" class="subtitle"></p>
-            <!-- <input type="text" placeholder="Untitled Note" />
-            <textarea placeholder="Your note..."></textarea> -->
+            <p id="note-body" class="note-body"></p>
+            <small id="note-date" class="subtitle"></small>
           </li>
         </template>
       </div>

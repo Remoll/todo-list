@@ -16,6 +16,11 @@ class NotesApp {
     this.renderNotesList();
   }
 
+  resetForm() {
+    this.noteTitle.value = "Untitled Note";
+    this.noteBody.value = "";
+  }
+
   getFormatedDate(dateString) {
     const date = new Date(dateString);
 
@@ -43,11 +48,14 @@ class NotesApp {
     });
 
     this.cancelNoteButton.addEventListener("click", () => {
-      this.noteTitle.value = "";
-      this.noteBody.value = "";
+      this.resetForm();
       this.addNoteForm.style.display = "none";
-      this.noNotes.style.display = "flex";
-      this.addNoteButton.style.display = "flex";
+
+      if (this.notes.length > 0) {
+        this.addNoteButton.style.display = "flex";
+      } else {
+        this.noNotes.style.display = "flex";
+      }
     });
 
     this.saveNoteButton.addEventListener("click", () => {
@@ -62,8 +70,7 @@ class NotesApp {
         };
         this.notes.push(newNote);
         this.renderNote(newNote);
-        this.noteTitle.value = "";
-        this.noteBody.value = "";
+        this.resetForm();
         this.addNoteForm.style.display = "none";
         this.addNoteButton.style.display = "flex";
       }
