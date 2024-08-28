@@ -39,6 +39,10 @@ class NotesApp {
     return formattedDate;
   }
 
+  getNewId() {
+    return Math.random().toString(16).slice(2);
+  }
+
   addEventListeners() {
     this.addNoteButton.addEventListener("click", () => {
       this.addNoteForm.style.display = "flex";
@@ -72,9 +76,10 @@ class NotesApp {
           title: this.noteTitle.value,
           body: this.noteBody.value,
           date: new Date(),
+          id: this.getNewId(),
         };
         this.notes.push(newNote);
-        this.renderNote(newNote);
+        this.renderNotesList();
         this.resetForm();
         this.addNoteForm.style.display = "none";
         this.addNoteButton.style.display = "flex";
@@ -90,16 +95,21 @@ class NotesApp {
         this.saveNoteButton.classList.remove("show");
       }
     });
-
-    this.cancelNoteRemoveButton.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
   }
 
-  renderNote(note) {
+  removeNoteFromArray(id) {
+    const index = this.notes.findIndex((note) => note.id === id);
+
+    if (index !== -1) {
+      this.notes.splice(index, 1);
+    }
+  }
+
+  getNoteTemplate(note) {
     const template = document
       .getElementById("note-template")
       .content.cloneNode(true);
+
     template.querySelector("#note-title").textContent = note.title;
     template.querySelector("#note-body").textContent = note.body;
     template.querySelector("#note-date").textContent = this.getFormatedDate(
@@ -107,54 +117,69 @@ class NotesApp {
     );
 
     const deleteButton = template.querySelector("#remove-note");
+
     deleteButton.addEventListener("click", (e) => {
       modal.style.display = "block";
 
-      const confirmRemove = () => {
-        e.target.closest("li").remove();
+      const cancelRemove = () => {
         modal.style.display = "none";
         this.confirmNoteRemoveButton.removeEventListener(
           "click",
           confirmRemove
         );
+        this.confirmNoteRemoveButton.removeEventListener("click", cancelRemove);
       };
+
+      const confirmRemove = () => {
+        this.removeNoteFromArray(note.id);
+        modal.style.display = "none";
+        if (this.notes.length > 0) {
+          this.addNoteButton.style.display = "flex";
+          this.noNotes.style.display = "none";
+        } else {
+          this.addNoteButton.style.display = "none";
+          this.noNotes.style.display = "flex";
+        }
+        this.confirmNoteRemoveButton.removeEventListener(
+          "click",
+          confirmRemove
+        );
+        this.confirmNoteRemoveButton.removeEventListener("click", cancelRemove);
+        this.renderNotesList();
+      };
+
+      this.cancelNoteRemoveButton.addEventListener("click", cancelRemove);
 
       this.confirmNoteRemoveButton.addEventListener("click", confirmRemove);
     });
 
-    document.getElementById("noteList").prepend(template);
+    const editButton = template.querySelector("#edit-note");
+
+    editButton.addEventListener("click", () => {
+      console.log("asd");
+    });
+
+    return template;
   }
 
   renderNotesList() {
-    const notesTemplates = this.notes.map(() => {
-      const template = document
-        .getElementById("note-template")
-        .content.cloneNode(true);
+    const filteredNotes = [...this.notes]
+      .reverse()
+      .filter((note) =>
+        note.title.toLowerCase().includes(this.searchInput.value.toLowerCase())
+      );
 
-      template.querySelector("input").value = note.title;
-      template.querySelector("textarea").value = note.body;
-
-      const deleteButton = template.querySelector(".delete-note");
-      deleteButton.addEventListener("click", (e) => {
-        e.target.closest("li").remove();
-      });
+    const notesTemplates = filteredNotes.map((note, index) => {
+      return this.getNoteTemplate(note);
     });
 
     const fragment = document.createDocumentFragment();
 
-    notesTemplates.forEach((note) => {
-      const template = document
-        .getElementById("note-template")
-        .content.cloneNode(true);
-
-      template.querySelector("input").value = note.title;
-      template.querySelector("textarea").value = note.body;
-      //   template.querySelector("textarea").value = note.date;
-
+    notesTemplates.forEach((template) => {
       fragment.appendChild(template);
     });
 
-    document.getElementById("noteList").appendChild(fragment);
+    document.getElementById("noteList").replaceChildren(fragment);
   }
 }
 
